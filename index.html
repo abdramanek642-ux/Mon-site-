@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bienvenue</title>
+<title>Mon Site 😈</title>
 
 <style>
-body{
+body {
 margin:0;
 padding:0;
-background-image:url("1771353700233.jpg");
+font-family:Arial;
+background:url("");
 background-size:cover;
 background-position:center;
-font-family:Arial;
 text-align:center;
 color:white;
 }
 
-.overlay{
-background:rgba(0,0,0,0.6);
+.overlay {
+background:rgba(0,0,0,0.7);
 height:100vh;
 display:flex;
 flex-direction:column;
@@ -24,11 +24,7 @@ justify-content:center;
 align-items:center;
 }
 
-h1{
-font-size:40px;
-}
-
-button{
+button {
 padding:15px 30px;
 font-size:18px;
 border:none;
@@ -37,22 +33,91 @@ background:purple;
 color:white;
 margin-top:20px;
 }
+
+.box {
+width:200px;
+height:100px;
+background:white;
+color:black;
+margin:10px;
+display:inline-flex;
+justify-content:center;
+align-items:center;
+border-radius:10px;
+}
 </style>
+
+<script>
+function page2(){
+document.body.innerHTML=`
+<div class="overlay">
+<h1>Je pourrais te hacker facilement tu sais 😈😈</h1>
+<button onclick="page3()">Continuer</button>
+</div>`;
+}
+
+function page3(){
+document.body.innerHTML=`
+<div class="overlay">
+<h1>Veux tu gagner un cadeau ?</h1>
+<button onclick="page4()">Oui</button>
+<button id="non" onmouseover="disparait()">Non</button>
+</div>`;
+}
+
+function disparait(){
+document.getElementById("non").style.display="none";
+}
+
+function page4(){
+document.body.innerHTML=`
+<div class="overlay">
+<h2>Choisis ton cadeau 🎁</h2>
+<div class="box" onclick="page5()">MacBook</div>
+<div class="box" onclick="page5()">Ordi Gamer</div>
+<div class="box" onclick="page5()">iPhone 17</div>
+<div class="box" onclick="page5()">iPad Pro</div>
+</div>`;
+}
+
+function page5(){
+document.body.innerHTML=`
+<div class="overlay">
+<h1>🎉 Félicitations 🎉</h1>
+<button onclick="page6()">Continuer</button>
+</div>`;
+}
+
+function page6(){
+document.body.innerHTML=`
+<div class="overlay">
+<h2>Entre ton numéro 📱</h2>
+<input id="num" placeholder="+223XXXXXXXX">
+<button onclick="verif()">Valider</button>
+</div>`;
+}
+
+function verif(){
+let n=document.getElementById("num").value;
+if(n.startsWith("+223") && n.length==12){
+document.body.innerHTML=`
+<div class="overlay">
+<h1>🤣🤣 GROS PRANK MDR JE T'AI EU 🤣🤣</h1>
+</div>`;
+}else{
+alert("Numéro incorrect !");
+}
+}
+</script>
 
 </head>
 
 <body>
-
 <div class="overlay">
-
 <h1>Salut 👋</h1>
-<p>Bienvenue sur mon site officiel</p>
-
-<button onclick="alert('Bienvenue sur mon site 😎')">
-Entrer
-</button>
-
+<p>Bienvenue sur mon site</p>
+<button onclick="page2()">Continuer</button>
 </div>
-
 </body>
+
 </html>
