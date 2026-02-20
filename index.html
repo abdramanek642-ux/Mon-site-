@@ -7,7 +7,7 @@
 body{
 margin:0;
 font-family:Arial;
-background:url("1771353700233.jpg");
+background:url("fond.jpg");
 background-size:cover;
 background-position:center;
 text-align:center;
@@ -59,42 +59,29 @@ height:100%;
 width:0%;
 background:lime;
 }
+
+.big{font-size:50px;}
 </style>
 
 <script>
 
+function son(){
+let s=document.getElementById("click");
+s.currentTime=0;
+s.play();
+}
+
 function page2(){
+son();
 document.body.innerHTML=`
 <div class="overlay">
 <h1>Je pourrais te hacker facilement tu sais 😈</h1>
-<button onclick="page3()">Continuer</button>
+<button onclick="hack()">Continuer</button>
 </div>`;
-}
-
-function page3(){
-document.body.innerHTML=`
-<div class="overlay">
-<h1>Veux tu gagner un cadeau ?</h1>
-<button onclick="hack()">Oui</button>
-<button id="non" onmouseover="bouge()" ontouchstart="bouge()">Non</button>
-<p id="msg"></p>
-</div>`;
-}
-
-function bouge(){
-let b=document.getElementById("non");
-let m=document.getElementById("msg");
-m.innerText="Tu n'as pas le choix 😂";
-
-let x=Math.random()*(window.innerWidth-100);
-let y=Math.random()*(window.innerHeight-50);
-
-b.style.position="absolute";
-b.style.left=x+"px";
-b.style.top=y+"px";
 }
 
 function hack(){
+son();
 document.body.innerHTML=`
 <div class="overlay">
 <h1>⚠️ HACK EN COURS...</h1>
@@ -106,24 +93,69 @@ w++;
 document.getElementById("bar").style.width=w+"%";
 if(w>=100){
 clearInterval(i);
-setTimeout(page4,500);
+setTimeout(jrigole,500);
 }
-},50);
+},30);
 }
 
-function page4(){
+function jrigole(){
 document.body.innerHTML=`
 <div class="overlay">
-<h2>Choisis ton cadeau 🎁</h2>
-<div class="box" onclick="fire()">MacBook</div>
-<div class="box" onclick="fire()">Ordi Gamer</div>
-<div class="box" onclick="fire()">iPhone 17</div>
-<div class="box" onclick="fire()">iPad Pro</div>
+<h1 class="big">JE RIGOLE 😂</h1>
+<button onclick="scan()">Continuer</button>
 </div>`;
 }
 
-function fire(){
-for(let i=0;i<60;i++){
+function scan(){
+son();
+document.body.innerHTML=`
+<div class="overlay">
+<h2>Analyse de ton téléphone...</h2>
+<p>Photos trouvées : 2487</p>
+<p>Messages lus : 126</p>
+<p>Contacts copiés : 89</p>
+<p>Connexion à ton WiFi...</p>
+<p>Batterie : 78% ➜ Accès autorisé</p>
+<button onclick="page3()">Continuer</button>
+</div>`;
+}
+
+function page3(){
+son();
+document.body.innerHTML=`
+<div class="overlay">
+<h1>Veux tu gagner un cadeau ?</h1>
+<button onclick="page4()">Oui</button>
+<button id="non" onmouseover="bouge()" ontouchstart="bouge()">Non</button>
+<p id="msg"></p>
+</div>`;
+}
+
+function bouge(){
+let b=document.getElementById("non");
+let m=document.getElementById("msg");
+m.innerText="Tu n'as pas le choix 😂";
+let x=Math.random()*(window.innerWidth-100);
+let y=Math.random()*(window.innerHeight-50);
+b.style.position="absolute";
+b.style.left=x+"px";
+b.style.top=y+"px";
+}
+
+function page4(){
+son();
+document.body.innerHTML=`
+<div class="overlay">
+<h2>Choisis une boîte mystère 🎁</h2>
+<div class="box" onclick="reveal('MacBook Pro 💻')">Boîte Mystère ❓</div>
+<div class="box" onclick="reveal('PC Gamer 🖥️')">Boîte Mystère ❓</div>
+<div class="box" onclick="reveal('iPhone 17 📱')">Boîte Mystère ❓</div>
+<div class="box" onclick="reveal('iPad Pro 📲')">Boîte Mystère ❓</div>
+</div>`;
+}
+
+function reveal(cadeau){
+for(let i=0;i<80;i++){
 let e=document.createElement("div");
 e.innerText="🎉";
 e.style.position="absolute";
@@ -132,7 +164,14 @@ e.style.top=Math.random()*window.innerHeight+"px";
 e.style.fontSize="30px";
 document.body.appendChild(e);
 }
-setTimeout(page5,2000);
+setTimeout(()=>{
+document.body.innerHTML=`
+<div class="overlay">
+<h1>🎁 ${cadeau}</h1>
+<h2>FÉLICITATIONS 🥳</h2>
+<button onclick="page5()">Continuer</button>
+</div>`;
+},2000);
 }
 
 function page5(){
@@ -161,6 +200,8 @@ alert("Numéro incorrect !");
 </head>
 
 <body>
+
+<audio id="click" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
 
 <div class="overlay">
 <h1>Je vous présente le site du génie abdramane_k 🤣</h1>
