@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Mon Site 😈</title>
+<title>TU ES FOUTU 😈</title>
 
 <style>
-body {
+body{
 margin:0;
-padding:0;
 font-family:Arial;
-background:url("1771353700233.jpg");
+background:url("");
 background-size:cover;
-background-position:center;
 text-align:center;
 color:white;
+overflow:hidden;
 }
 
-.overlay {
+.overlay{
 background:rgba(0,0,0,0.7);
 height:100vh;
 display:flex;
@@ -24,17 +23,36 @@ justify-content:center;
 align-items:center;
 }
 
-button {
+button{
 padding:15px 30px;
-font-size:18px;
+font-size:20px;
 border:none;
 border-radius:10px;
-background:purple;
+background:red;
 color:white;
-margin-top:20px;
+margin:10px;
+animation:tremble 0.4s infinite;
 }
 
-.box {
+@keyframes tremble{
+0%{transform:rotate(0deg);}
+25%{transform:rotate(2deg);}
+50%{transform:rotate(-2deg);}
+75%{transform:rotate(2deg);}
+100%{transform:rotate(0deg);}
+}
+
+h1{
+animation:flash 1s infinite;
+}
+
+@keyframes flash{
+0%{opacity:1;}
+50%{opacity:0;}
+100%{opacity:1;}
+}
+
+.box{
 width:200px;
 height:100px;
 background:white;
@@ -45,53 +63,107 @@ justify-content:center;
 align-items:center;
 border-radius:10px;
 }
+
+.progress{
+width:80%;
+height:30px;
+background:white;
+border-radius:20px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:lime;
+}
 </style>
 
 <script>
+
+function son(){
+document.getElementById("s").play();
+}
+
 function page2(){
+son();
 document.body.innerHTML=`
 <div class="overlay">
-<h1>Je pourrais te hacker facilement tu sais 😈😈</h1>
+<h1>Je pourrais te hacker facilement 😈</h1>
 <button onclick="page3()">Continuer</button>
 </div>`;
 }
 
 function page3(){
+son();
 document.body.innerHTML=`
 <div class="overlay">
 <h1>Veux tu gagner un cadeau ?</h1>
-<button onclick="page4()">Oui</button>
-<button id="non" onmouseover="disparait()">Non</button>
+<button onclick="hack()">Oui</button>
+<button id="non" onmouseover="bouge()" ontouchstart="bouge()">Non</button>
+<p id="msg"></p>
 </div>`;
 }
 
-function disparait(){
-document.getElementById("non").style.display="none";
+function bouge(){
+let b=document.getElementById("non");
+let m=document.getElementById("msg");
+m.innerText="Tu n'as pas le choix 😂";
+
+let x=Math.random()*(window.innerWidth-100);
+let y=Math.random()*(window.innerHeight-50);
+
+b.style.position="absolute";
+b.style.left=x+"px";
+b.style.top=y+"px";
+}
+
+function hack(){
+son();
+document.body.innerHTML=`
+<div class="overlay">
+<h1>⚠️ HACK EN COURS...</h1>
+<div class="progress"><div class="bar" id="bar"></div></div>
+</div>`;
+let w=0;
+let i=setInterval(()=>{
+w++;
+document.getElementById("bar").style.width=w+"%";
+if(w>=100){
+clearInterval(i);
+setTimeout(page4,500);
+}
+},50);
 }
 
 function page4(){
 document.body.innerHTML=`
 <div class="overlay">
 <h2>Choisis ton cadeau 🎁</h2>
-<div class="box" onclick="page5()">MacBook</div>
-<div class="box" onclick="page5()">Ordi Gamer</div>
-<div class="box" onclick="page5()">iPhone 17</div>
-<div class="box" onclick="page5()">iPad Pro</div>
+<div class="box" onclick="fire()">MacBook</div>
+<div class="box" onclick="fire()">Ordi Gamer</div>
+<div class="box" onclick="fire()">iPhone 17</div>
+<div class="box" onclick="fire()">iPad Pro</div>
 </div>`;
+}
+
+function fire(){
+for(let i=0;i<100;i++){
+let e=document.createElement("div");
+e.innerText="🎉";
+e.style.position="absolute";
+e.style.left=Math.random()*window.innerWidth+"px";
+e.style.top=Math.random()*window.innerHeight+"px";
+e.style.fontSize="30px";
+document.body.appendChild(e);
+}
+setTimeout(page5,2000);
 }
 
 function page5(){
 document.body.innerHTML=`
 <div class="overlay">
-<h1>🎉 Félicitations 🎉</h1>
-<button onclick="page6()">Continuer</button>
-</div>`;
-}
-
-function page6(){
-document.body.innerHTML=`
-<div class="overlay">
-<h2>Entre ton numéro 📱</h2>
+<h1>Entre ton numéro 📱</h1>
 <input id="num" placeholder="+223XXXXXXXX">
 <button onclick="verif()">Valider</button>
 </div>`;
@@ -108,16 +180,20 @@ document.body.innerHTML=`
 alert("Numéro incorrect !");
 }
 }
+
 </script>
 
 </head>
 
 <body>
+
+<audio id="s" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
+
 <div class="overlay">
 <h1>Salut 👋</h1>
 <p>Bienvenue sur mon site</p>
 <button onclick="page2()">Continuer</button>
 </div>
-</body>
 
+</body>
 </html>
