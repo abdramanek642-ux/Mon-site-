@@ -67,8 +67,7 @@ background:lime;
 
 function son(){
 let s=document.getElementById("click");
-s.currentTime=0;
-s.play();
+if(s){s.currentTime=0;s.play();}
 }
 
 function page2(){
@@ -116,11 +115,11 @@ document.body.innerHTML=`
 <p>Contacts copiés : 89</p>
 <p>Connexion à ton WiFi...</p>
 <p>Batterie : 78% ➜ Accès autorisé</p>
-<button onclick="page3()">Continuer</button>
+<button onclick="cadeauAsk()">Continuer</button>
 </div>`;
 }
 
-function page3(){
+function cadeauAsk(){
 son();
 document.body.innerHTML=`
 <div class="overlay">
