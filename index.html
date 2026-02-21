@@ -2,16 +2,29 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Site du génie Abdramane_k</title>
+<title>Le site du génie Abdramane_k</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body{
     margin:0;
-    font-family: Arial, sans-serif;
-    text-align:center;
+    font-family:'Poppins', sans-serif;
     background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
     color:white;
+    text-align:center;
     overflow:hidden;
+}
+
+h1,h2,h3{
+    font-family:'Orbitron', sans-serif;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{ text-shadow:0 0 10px #fff;}
+    to{ text-shadow:0 0 25px #00ffff;}
 }
 
 .page{
@@ -25,13 +38,13 @@ body{
 
 button{
     padding:15px 25px;
+    margin:15px;
     font-size:18px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     cursor:pointer;
     background:#ff9800;
     color:white;
-    margin-top:20px;
     transition:0.3s;
 }
 
@@ -47,112 +60,197 @@ input, textarea{
     border:none;
 }
 
-h1{
-    animation: glow 1.5s infinite alternate;
+#noBtn{
+    position:absolute;
 }
 
-@keyframes glow{
-    from{ text-shadow:0 0 10px #fff;}
-    to{ text-shadow:0 0 20px #ff9800;}
+.box{
+    display:inline-block;
+    width:100px;
+    height:100px;
+    background:#ff9800;
+    margin:15px;
+    line-height:100px;
+    font-size:30px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#gear{
+    position:fixed;
+    top:10px;
+    right:10px;
+    font-size:30px;
+    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE CADEAU -->
+<div id="gear" onclick="adminAccess()">⚙</div>
+
+<audio id="clickSound">
+<source src="https://www.soundjay.com/buttons/sounds/button-3.mp3">
+</audio>
+
+<!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>🎁 Félicitations <span id="displayName"></span> 🎉</h1>
-    <p>Tu as gagné un cadeau mystère 😏</p>
-    <button onclick="goToPrank()">Continuer</button>
+<h1>Bienvenue sur le site du génie Abdramane_k 😎</h1>
+<button onclick="nextPage(2)">Continuer</button>
 </div>
 
-<!-- PAGE PRANK -->
+<!-- PAGE 2 -->
 <div id="page2" class="page">
-    <h1>😈 Bien évidemment que c'était un prank</h1>
-    <button onclick="goToForm()">Continuer</button>
+<h2>Est-ce que tu veux continuer ?</h2>
+<button onclick="nextPage(4)">Oui</button>
+<button id="noBtn" onmouseover="moveNo()">Non</button>
 </div>
 
-<!-- PAGE FORMULAIRE -->
+<!-- PAGE 3 -->
 <div id="page3" class="page">
-    <h1>💬 Ton avis compte</h1>
-
-    <input type="text" id="userName" placeholder="Ton nom">
-
-    <h3>🤝 Demande de collaboration :</h3>
-    <textarea id="collab" rows="3"></textarea>
-
-    <h3>💡 Idée pour l'amélioration du site :</h3>
-    <textarea id="idee" rows="3"></textarea>
-
-    <h3>📝 Commentaires :</h3>
-    <textarea id="comment" rows="3"></textarea>
-
-    <button onclick="submitForm()">Envoyer</button>
-
-    <p id="error" style="color:red;"></p>
+<h2>Faut continuer vieux mogo 😂</h2>
+<button onclick="nextPage(4)">Continuer</button>
 </div>
 
-<!-- PAGE FINALE -->
+<!-- PAGE 4 -->
 <div id="page4" class="page">
-    <h1>🙏 Je te remercie pour ton passage 💩</h1>
-    <h2>Au revoir 👋</h2>
+<h2>Choisis une boîte 🎁</h2>
+<div class="box" onclick="gift()">🎁</div>
+<div class="box" onclick="gift()">🎁</div>
+<div class="box" onclick="gift()">🎁</div>
+</div>
+
+<!-- PAGE 5 -->
+<div id="page5" class="page">
+<h1>🎉 Félicitations <span id="displayName"></span> 🎉</h1>
+<p>Tu as gagné un cadeau mystère 😏</p>
+<button onclick="nextPage(6)">Continuer</button>
+</div>
+
+<!-- PAGE 6 -->
+<div id="page6" class="page">
+<h1>😈 Je pourrais te hacker...</h1>
+<button onclick="startHack()">Continuer</button>
+</div>
+
+<!-- PAGE 7 -->
+<div id="page7" class="page">
+<h1 id="hackText">💻 Hack en cours...</h1>
+</div>
+
+<!-- PAGE 8 -->
+<div id="page8" class="page">
+<h1>😂 Je rigole</h1>
+<button onclick="nextPage(9)">Continuer</button>
+</div>
+
+<!-- PAGE 9 -->
+<div id="page9" class="page">
+<h1>😎 Bien évidemment que c’était un prank</h1>
+<button onclick="nextPage(10)">Continuer</button>
+</div>
+
+<!-- PAGE 10 -->
+<div id="page10" class="page">
+<h2>💬 Ton avis compte</h2>
+
+<input type="text" id="userName" placeholder="Ton nom">
+
+<h3>🤝 Demande de collaboration :</h3>
+<textarea id="collab"></textarea>
+
+<h3>💡 Idée pour améliorer le site :</h3>
+<textarea id="idee"></textarea>
+
+<h3>📝 Commentaires :</h3>
+<textarea id="comment"></textarea>
+
+<button onclick="submitForm()">Envoyer</button>
+<p id="error" style="color:red;"></p>
+</div>
+
+<!-- PAGE 11 -->
+<div id="page11" class="page">
+<h1>🙏 Je te remercie pour ton passage 💩</h1>
+<h2>Au revoir 👋</h2>
 </div>
 
 <script>
 
-// récupère nom depuis localStorage si existe
-let savedName = localStorage.getItem("nomCadeau");
-if(savedName){
-    document.getElementById("displayName").innerText = savedName;
-}else{
-    let name = prompt("Entre ton nom pour recevoir ton cadeau 😎");
-    localStorage.setItem("nomCadeau", name);
-    document.getElementById("displayName").innerText = name;
+function playClick(){
+document.getElementById("clickSound").play();
 }
 
-function goToPrank(){
-    document.getElementById("page1").classList.remove("active");
-    document.getElementById("page2").classList.add("active");
+function nextPage(num){
+playClick();
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById("page"+num).classList.add("active");
 }
 
-function goToForm(){
-    document.getElementById("page2").classList.remove("active");
-    document.getElementById("page3").classList.add("active");
+function moveNo(){
+let btn=document.getElementById("noBtn");
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+function gift(){
+let name=prompt("Entre ton nom pour recevoir ton cadeau 😎");
+localStorage.setItem("nomCadeau",name);
+document.getElementById("displayName").innerText=name;
+nextPage(5);
+}
+
+function startHack(){
+nextPage(7);
+let count=3;
+let interval=setInterval(()=>{
+document.getElementById("hackText").innerText="💻 Hack en cours... "+count;
+count--;
+if(count<0){
+clearInterval(interval);
+nextPage(8);
+}
+},1000);
 }
 
 function submitForm(){
+let name=document.getElementById("userName").value.trim();
+let collab=document.getElementById("collab").value.trim();
+let idee=document.getElementById("idee").value.trim();
+let comment=document.getElementById("comment").value.trim();
+let error=document.getElementById("error");
 
-    let name = document.getElementById("userName").value.trim();
-    let collab = document.getElementById("collab").value.trim();
-    let idee = document.getElementById("idee").value.trim();
-    let comment = document.getElementById("comment").value.trim();
-    let error = document.getElementById("error");
+if(!name){
+error.innerText="Entre ton nom.";
+return;
+}
 
-    if(!name){
-        error.innerText = "Entre ton nom avant d'envoyer.";
-        return;
-    }
+if(collab==="" && idee==="" && comment===""){
+error.innerText="Remplis au moins une section.";
+return;
+}
 
-    if(collab==="" && idee==="" && comment===""){
-        error.innerText = "Remplis au moins une section.";
-        return;
-    }
+let data={nom:name,collab,idee,comment};
+let old=JSON.parse(localStorage.getItem("messages"))||[];
+old.push(data);
+localStorage.setItem("messages",JSON.stringify(old));
 
-    // Sauvegarde local
-    let data = {
-        nom:name,
-        collab:collab,
-        idee:idee,
-        comment:comment
-    };
+nextPage(11);
+}
 
-    let oldData = JSON.parse(localStorage.getItem("messages")) || [];
-    oldData.push(data);
-    localStorage.setItem("messages", JSON.stringify(oldData));
-
-    document.getElementById("page3").classList.remove("active");
-    document.getElementById("page4").classList.add("active");
+function adminAccess(){
+let pass=prompt("Mot de passe admin ?");
+if(pass==="abdramane123"){
+let data=JSON.parse(localStorage.getItem("messages"))||[];
+let msg="";
+data.forEach(d=>{
+msg+=d.nom+" : "+(d.comment||d.idee||d.collab)+"\n\n";
+});
+alert(msg||"Aucun message.");
+}else{
+alert("Accès refusé.");
+}
 }
 
 </script>
