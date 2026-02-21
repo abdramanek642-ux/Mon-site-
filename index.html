@@ -2,55 +2,62 @@
 <html>
 <head>
 <title>Site du Génie 😈</title>
-
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:url("fond.jpg");
 background-size:cover;
 background-position:center;
-text-align:center;
 color:white;
-overflow:hidden;
+text-align:center;
+overflow-x:hidden;
+transition:0.5s;
 }
 
 .overlay{
-background:rgba(0,0,0,0.7);
-height:100vh;
+background:rgba(0,0,0,0.8);
+min-height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+padding:20px;
 }
 
 button{
-padding:15px 30px;
-font-size:20px;
-border:none;
-border-radius:10px;
-background:red;
-color:white;
+padding:12px 25px;
 margin:10px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
 }
 
+input,textarea,select{
+padding:10px;
+margin:5px;
+width:80%;
+max-width:400px;
+border-radius:6px;
+border:none;
+}
+
+textarea{height:80px;}
+
 .box{
-width:200px;
-height:100px;
 background:white;
 color:black;
+padding:20px;
 margin:10px;
-display:inline-flex;
-justify-content:center;
-align-items:center;
 border-radius:10px;
+cursor:pointer;
 }
 
 .progress{
 width:80%;
-height:30px;
 background:white;
-border-radius:20px;
+height:20px;
+border-radius:10px;
 overflow:hidden;
 }
 
@@ -60,19 +67,84 @@ width:0%;
 background:lime;
 }
 
-.big{font-size:50px;}
+.terminal{
+color:lime;
+font-family:monospace;
+text-align:left;
+width:90%;
+max-width:500px;
+}
+
+#gear{
+position:fixed;
+top:10px;
+right:10px;
+font-size:25px;
+cursor:pointer;
+z-index:1000;
+}
+
+#panel{
+position:fixed;
+top:0;
+right:-100%;
+width:300px;
+height:100%;
+background:#111;
+color:white;
+padding:20px;
+transition:0.5s;
+overflow:auto;
+z-index:999;
+}
+
+.star{
+font-size:25px;
+cursor:pointer;
+}
 </style>
+</head>
+
+<body onload="start()">
+
+<div id="gear" onclick="togglePanel()">⚙</div>
+
+<div id="panel">
+<h3>Commentaires</h3>
+<div id="listCommentaires"></div>
+<hr>
+<h3>Collaboration</h3>
+<div id="listCollaboration"></div>
+<hr>
+<h3>Idées</h3>
+<div id="listIdees"></div>
+</div>
+
+<div id="app"></div>
 
 <script>
 
-function son(){
-let s=document.getElementById("click");
-if(s){s.currentTime=0;s.play();}
+function setBg(img){
+document.body.style.backgroundImage="url('"+img+"')";
+}
+
+function togglePanel(){
+let p=document.getElementById("panel");
+p.style.right = p.style.right=="0px" ? "-100%" : "0px";
+}
+
+function start(){
+setBg("fond.jpg");
+document.getElementById("app").innerHTML=`
+<div class="overlay">
+<h1>Je vous présente le site du génie abdramane_k 😎</h1>
+<button onclick="page2()">Continuer</button>
+</div>`;
 }
 
 function page2(){
-son();
-document.body.innerHTML=`
+setBg("hack.jpg");
+document.getElementById("app").innerHTML=`
 <div class="overlay">
 <h1>Je pourrais te hacker facilement tu sais 😈</h1>
 <button onclick="hack()">Continuer</button>
@@ -80,132 +152,160 @@ document.body.innerHTML=`
 }
 
 function hack(){
-son();
-document.body.innerHTML=`
+setBg("hack.jpg");
+document.getElementById("app").innerHTML=`
 <div class="overlay">
 <h1>⚠️ HACK EN COURS...</h1>
 <div class="progress"><div class="bar" id="bar"></div></div>
 </div>`;
+
 let w=0;
 let i=setInterval(()=>{
 w++;
 document.getElementById("bar").style.width=w+"%";
+document.body.style.transform = w%5==0 ? "translateX(5px)" : "translateX(-5px)";
 if(w>=100){
 clearInterval(i);
-setTimeout(jrigole,500);
+document.body.style.transform="none";
+setTimeout(terminal,500);
 }
 },30);
 }
 
-function jrigole(){
-document.body.innerHTML=`
+function terminal(){
+setBg("scan.jpg");
+document.getElementById("app").innerHTML=`
 <div class="overlay">
-<h1 class="big">JE RIGOLE 😂</h1>
-<button onclick="scan()">Continuer</button>
+<div class="terminal" id="term"></div>
+<button onclick="rigole()">Continuer</button>
 </div>`;
+
+let lines=[
+"> Connexion établie...",
+"> Analyse des fichiers...",
+"> Données copiées : 100%",
+"> Accès administrateur obtenu"
+];
+
+let i=0;
+let term=document.getElementById("term");
+let writer=setInterval(()=>{
+if(i<lines.length){
+term.innerHTML+=lines[i]+"<br>";
+i++;
+}else clearInterval(writer);
+},700);
 }
 
-function scan(){
-son();
-document.body.innerHTML=`
+function rigole(){
+setBg("rigole.jpg");
+document.getElementById("app").innerHTML=`
 <div class="overlay">
-<h2>Analyse de ton téléphone...</h2>
-<p>Photos trouvées : 2487</p>
-<p>Messages lus : 126</p>
-<p>Contacts copiés : 89</p>
-<p>Connexion à ton WiFi...</p>
-<p>Batterie : 78% ➜ Accès autorisé</p>
+<h1>JE RIGOLE 😂</h1>
 <button onclick="cadeauAsk()">Continuer</button>
 </div>`;
 }
 
 function cadeauAsk(){
-son();
-document.body.innerHTML=`
+setBg("cadeau.jpg");
+document.getElementById("app").innerHTML=`
 <div class="overlay">
-<h1>Veux tu gagner un cadeau ?</h1>
-<button onclick="page4()">Oui</button>
-<button id="non" onmouseover="bouge()" ontouchstart="bouge()">Non</button>
-<p id="msg"></p>
+<h2>Veux tu gagner un cadeau ?</h2>
+<button id="oui" onmouseover="fuir()">Oui</button>
+<button onclick="forceContinue()">Non</button>
 </div>`;
 }
 
-function bouge(){
-let b=document.getElementById("non");
-let m=document.getElementById("msg");
-m.innerText="Tu n'as pas le choix 😂";
-let x=Math.random()*(window.innerWidth-100);
-let y=Math.random()*(window.innerHeight-50);
+function fuir(){
+let b=document.getElementById("oui");
 b.style.position="absolute";
-b.style.left=x+"px";
-b.style.top=y+"px";
+b.style.left=Math.random()*window.innerWidth+"px";
+b.style.top=Math.random()*window.innerHeight+"px";
 }
 
-function page4(){
-son();
-document.body.innerHTML=`
+function forceContinue(){
+document.getElementById("app").innerHTML=`
+<div class="overlay">
+<h2>Faut continuer vieux mogo 😂</h2>
+<button onclick="mystere()">Continuer</button>
+</div>`;
+}
+
+function mystere(){
+document.getElementById("app").innerHTML=`
 <div class="overlay">
 <h2>Choisis une boîte mystère 🎁</h2>
-<div class="box" onclick="reveal('MacBook Pro 💻')">Boîte Mystère ❓</div>
-<div class="box" onclick="reveal('PC Gamer 🖥️')">Boîte Mystère ❓</div>
-<div class="box" onclick="reveal('iPhone 17 📱')">Boîte Mystère ❓</div>
-<div class="box" onclick="reveal('iPad Pro 📲')">Boîte Mystère ❓</div>
+<div class="box" onclick="reveal()">Boîte Mystère ❓</div>
+<div class="box" onclick="reveal()">Boîte Mystère ❓</div>
+<div class="box" onclick="reveal()">Boîte Mystère ❓</div>
 </div>`;
 }
 
-function reveal(cadeau){
-for(let i=0;i<80;i++){
-let e=document.createElement("div");
-e.innerText="🎉";
-e.style.position="absolute";
-e.style.left=Math.random()*window.innerWidth+"px";
-e.style.top=Math.random()*window.innerHeight+"px";
-e.style.fontSize="30px";
-document.body.appendChild(e);
-}
-setTimeout(()=>{
-document.body.innerHTML=`
+function reveal(){
+document.getElementById("app").innerHTML=`
 <div class="overlay">
-<h1>🎁 ${cadeau}</h1>
-<h2>FÉLICITATIONS 🥳</h2>
-<button onclick="page5()">Continuer</button>
-</div>`;
-},2000);
-}
-
-function page5(){
-document.body.innerHTML=`
-<div class="overlay">
-<h1>Entre ton numéro 📱</h1>
-<input id="num" placeholder="+223XXXXXXXX">
-<button onclick="verif()">Valider</button>
+<h1>🎉 FÉLICITATIONS 🎉</h1>
+<input id="nom" placeholder="Entre ton nom">
+<button onclick="fin()">Continuer</button>
 </div>`;
 }
 
-function verif(){
-let n=document.getElementById("num").value;
-if(n.startsWith("+223") && n.length==12){
-document.body.innerHTML=`
+function fin(){
+let nom=document.getElementById("nom").value;
+setBg("prank.jpg");
+document.getElementById("app").innerHTML=`
 <div class="overlay">
-<h1>🤣🤣 GROS PRANK MDR JE T'AI EU 🤣🤣</h1>
+<h1>Bien évidemment c'était un prank 😎</h1>
+<h3>Bravo ${nom}</h3>
+
+<div>
+<span class="star">⭐</span>
+<span class="star">⭐</span>
+<span class="star">⭐</span>
+<span class="star">⭐</span>
+<span class="star">⭐</span>
+</div>
+
+<h3>Laisse un message</h3>
+
+<input id="nom2" placeholder="Ton nom">
+<select id="categorie">
+<option>Commentaires</option>
+<option>Collaboration</option>
+<option>Idees</option>
+</select>
+<textarea id="message" placeholder="Ton message"></textarea>
+<button onclick="envoyer()">Envoyer</button>
+
+<p id="merci"></p>
+
 </div>`;
-}else{
-alert("Numéro incorrect !");
+loadMessages();
 }
+
+function envoyer(){
+let nom=document.getElementById("nom2").value;
+let cat=document.getElementById("categorie").value;
+let msg=document.getElementById("message").value;
+
+let data=JSON.parse(localStorage.getItem(cat))||[];
+data.push(nom+": "+msg);
+localStorage.setItem(cat,JSON.stringify(data));
+
+document.getElementById("merci").innerHTML=
+"🙏 Merci "+nom+", je te remercie d'être passée !";
+
+loadMessages();
+}
+
+function loadMessages(){
+["Commentaires","Collaboration","Idees"].forEach(cat=>{
+let data=JSON.parse(localStorage.getItem(cat))||[];
+let list=document.getElementById("list"+cat);
+if(list) list.innerHTML=data.map(d=>"<p>"+d+"</p>").join("");
+});
 }
 
 </script>
-
-</head>
-
-<body>
-
-<audio id="click" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
-
-<div class="overlay">
-<h1>Je vous présente le site du génie abdramane_k 🤣</h1>
-<button onclick="page2()">Continuer</button>
-</div>
-
 </body>
 </html>
