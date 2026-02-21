@@ -1,311 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<title>Site du Génie 😈</title>
+<meta charset="UTF-8">
+<title>Site du génie Abdramane_k</title>
+
 <style>
 body{
-margin:0;
-font-family:Arial;
-background-size:cover;
-background-position:center;
-color:white;
-text-align:center;
-overflow-x:hidden;
-transition:0.5s;
+    margin:0;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    color:white;
+    overflow:hidden;
 }
 
-.overlay{
-background:rgba(0,0,0,0.8);
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:20px;
+.page{
+    display:none;
+    padding:40px;
+}
+
+.active{
+    display:block;
 }
 
 button{
-padding:12px 25px;
-margin:10px;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#ff9800;
+    color:white;
+    margin-top:20px;
+    transition:0.3s;
 }
 
-input,textarea,select{
-padding:10px;
-margin:5px;
-width:80%;
-max-width:400px;
-border-radius:6px;
-border:none;
+button:hover{
+    transform:scale(1.1);
 }
 
-textarea{height:80px;}
-
-.box{
-background:white;
-color:black;
-padding:20px;
-margin:10px;
-border-radius:10px;
-cursor:pointer;
+input, textarea{
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border-radius:8px;
+    border:none;
 }
 
-.progress{
-width:80%;
-background:white;
-height:20px;
-border-radius:10px;
-overflow:hidden;
+h1{
+    animation: glow 1.5s infinite alternate;
 }
 
-.bar{
-height:100%;
-width:0%;
-background:lime;
-}
-
-.terminal{
-color:lime;
-font-family:monospace;
-text-align:left;
-width:90%;
-max-width:500px;
-}
-
-#gear{
-position:fixed;
-top:10px;
-right:10px;
-font-size:25px;
-cursor:pointer;
-z-index:1000;
-}
-
-#panel{
-position:fixed;
-top:0;
-right:-100%;
-width:300px;
-height:100%;
-background:#111;
-color:white;
-padding:20px;
-transition:0.5s;
-overflow:auto;
-z-index:999;
-}
-
-.star{
-font-size:25px;
-cursor:pointer;
+@keyframes glow{
+    from{ text-shadow:0 0 10px #fff;}
+    to{ text-shadow:0 0 20px #ff9800;}
 }
 </style>
 </head>
 
-<body onload="start()">
+<body>
 
-<div id="gear" onclick="togglePanel()">⚙</div>
-
-<div id="panel">
-<h3>Commentaires</h3>
-<div id="listCommentaires"></div>
-<hr>
-<h3>Collaboration</h3>
-<div id="listCollaboration"></div>
-<hr>
-<h3>Idées</h3>
-<div id="listIdees"></div>
+<!-- PAGE CADEAU -->
+<div id="page1" class="page active">
+    <h1>🎁 Félicitations <span id="displayName"></span> 🎉</h1>
+    <p>Tu as gagné un cadeau mystère 😏</p>
+    <button onclick="goToPrank()">Continuer</button>
 </div>
 
-<div id="app"></div>
+<!-- PAGE PRANK -->
+<div id="page2" class="page">
+    <h1>😈 Bien évidemment que c'était un prank</h1>
+    <button onclick="goToForm()">Continuer</button>
+</div>
+
+<!-- PAGE FORMULAIRE -->
+<div id="page3" class="page">
+    <h1>💬 Ton avis compte</h1>
+
+    <input type="text" id="userName" placeholder="Ton nom">
+
+    <h3>🤝 Demande de collaboration :</h3>
+    <textarea id="collab" rows="3"></textarea>
+
+    <h3>💡 Idée pour l'amélioration du site :</h3>
+    <textarea id="idee" rows="3"></textarea>
+
+    <h3>📝 Commentaires :</h3>
+    <textarea id="comment" rows="3"></textarea>
+
+    <button onclick="submitForm()">Envoyer</button>
+
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- PAGE FINALE -->
+<div id="page4" class="page">
+    <h1>🙏 Je te remercie pour ton passage 💩</h1>
+    <h2>Au revoir 👋</h2>
+</div>
 
 <script>
 
-function setBg(img){
-document.body.style.backgroundImage="url('"+img+"')";
+// récupère nom depuis localStorage si existe
+let savedName = localStorage.getItem("nomCadeau");
+if(savedName){
+    document.getElementById("displayName").innerText = savedName;
+}else{
+    let name = prompt("Entre ton nom pour recevoir ton cadeau 😎");
+    localStorage.setItem("nomCadeau", name);
+    document.getElementById("displayName").innerText = name;
 }
 
-function togglePanel(){
-let p=document.getElementById("panel");
-p.style.right = p.style.right=="0px" ? "-100%" : "0px";
+function goToPrank(){
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
 }
 
-function start(){
-setBg("fond.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h1>Je vous présente le site du génie abdramane_k 😎</h1>
-<button onclick="page2()">Continuer</button>
-</div>`;
+function goToForm(){
+    document.getElementById("page2").classList.remove("active");
+    document.getElementById("page3").classList.add("active");
 }
 
-function page2(){
-setBg("hack.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h1>Je pourrais te hacker facilement tu sais 😈</h1>
-<button onclick="hack()">Continuer</button>
-</div>`;
-}
+function submitForm(){
 
-function hack(){
-setBg("hack.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h1>⚠️ HACK EN COURS...</h1>
-<div class="progress"><div class="bar" id="bar"></div></div>
-</div>`;
+    let name = document.getElementById("userName").value.trim();
+    let collab = document.getElementById("collab").value.trim();
+    let idee = document.getElementById("idee").value.trim();
+    let comment = document.getElementById("comment").value.trim();
+    let error = document.getElementById("error");
 
-let w=0;
-let i=setInterval(()=>{
-w++;
-document.getElementById("bar").style.width=w+"%";
-document.body.style.transform = w%5==0 ? "translateX(5px)" : "translateX(-5px)";
-if(w>=100){
-clearInterval(i);
-document.body.style.transform="none";
-setTimeout(terminal,500);
-}
-},30);
-}
+    if(!name){
+        error.innerText = "Entre ton nom avant d'envoyer.";
+        return;
+    }
 
-function terminal(){
-setBg("scan.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<div class="terminal" id="term"></div>
-<button onclick="rigole()">Continuer</button>
-</div>`;
+    if(collab==="" && idee==="" && comment===""){
+        error.innerText = "Remplis au moins une section.";
+        return;
+    }
 
-let lines=[
-"> Connexion établie...",
-"> Analyse des fichiers...",
-"> Données copiées : 100%",
-"> Accès administrateur obtenu"
-];
+    // Sauvegarde local
+    let data = {
+        nom:name,
+        collab:collab,
+        idee:idee,
+        comment:comment
+    };
 
-let i=0;
-let term=document.getElementById("term");
-let writer=setInterval(()=>{
-if(i<lines.length){
-term.innerHTML+=lines[i]+"<br>";
-i++;
-}else clearInterval(writer);
-},700);
-}
+    let oldData = JSON.parse(localStorage.getItem("messages")) || [];
+    oldData.push(data);
+    localStorage.setItem("messages", JSON.stringify(oldData));
 
-function rigole(){
-setBg("rigole.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h1>JE RIGOLE 😂</h1>
-<button onclick="cadeauAsk()">Continuer</button>
-</div>`;
-}
-
-function cadeauAsk(){
-setBg("cadeau.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h2>Veux tu gagner un cadeau ?</h2>
-<button id="oui" onmouseover="fuir()">Oui</button>
-<button onclick="forceContinue()">Non</button>
-</div>`;
-}
-
-function fuir(){
-let b=document.getElementById("oui");
-b.style.position="absolute";
-b.style.left=Math.random()*window.innerWidth+"px";
-b.style.top=Math.random()*window.innerHeight+"px";
-}
-
-function forceContinue(){
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h2>Faut continuer vieux mogo 😂</h2>
-<button onclick="mystere()">Continuer</button>
-</div>`;
-}
-
-function mystere(){
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h2>Choisis une boîte mystère 🎁</h2>
-<div class="box" onclick="reveal()">Boîte Mystère ❓</div>
-<div class="box" onclick="reveal()">Boîte Mystère ❓</div>
-<div class="box" onclick="reveal()">Boîte Mystère ❓</div>
-</div>`;
-}
-
-function reveal(){
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h1>🎉 FÉLICITATIONS 🎉</h1>
-<input id="nom" placeholder="Entre ton nom">
-<button onclick="fin()">Continuer</button>
-</div>`;
-}
-
-function fin(){
-let nom=document.getElementById("nom").value;
-setBg("prank.jpg");
-document.getElementById("app").innerHTML=`
-<div class="overlay">
-<h1>Bien évidemment c'était un prank 😎</h1>
-<h3>Bravo ${nom}</h3>
-
-<div>
-<span class="star">⭐</span>
-<span class="star">⭐</span>
-<span class="star">⭐</span>
-<span class="star">⭐</span>
-<span class="star">⭐</span>
-</div>
-
-<h3>Laisse un message</h3>
-
-<input id="nom2" placeholder="Ton nom">
-<select id="categorie">
-<option>Commentaires</option>
-<option>Collaboration</option>
-<option>Idees</option>
-</select>
-<textarea id="message" placeholder="Ton message"></textarea>
-<button onclick="envoyer()">Envoyer</button>
-
-<p id="merci"></p>
-
-</div>`;
-loadMessages();
-}
-
-function envoyer(){
-let nom=document.getElementById("nom2").value;
-let cat=document.getElementById("categorie").value;
-let msg=document.getElementById("message").value;
-
-let data=JSON.parse(localStorage.getItem(cat))||[];
-data.push(nom+": "+msg);
-localStorage.setItem(cat,JSON.stringify(data));
-
-document.getElementById("merci").innerHTML=
-"🙏 Merci "+nom+", je te remercie d'être passée !";
-
-loadMessages();
-}
-
-function loadMessages(){
-["Commentaires","Collaboration","Idees"].forEach(cat=>{
-let data=JSON.parse(localStorage.getItem(cat))||[];
-let list=document.getElementById("list"+cat);
-if(list) list.innerHTML=data.map(d=>"<p>"+d+"</p>").join("");
-});
+    document.getElementById("page3").classList.remove("active");
+    document.getElementById("page4").classList.add("active");
 }
 
 </script>
+
 </body>
 </html>
